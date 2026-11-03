@@ -34,20 +34,6 @@
 - [ ] Shader Implementation
 - [ ] Interactive Graphics
 
-## 📂 Project Structure
-
-```text
-KMU_2_CG/
-├── Assets/
-│   ├── Scripts/
-│   ├── Shaders/
-│   ├── Materials/
-│   └── Resources/
-├── Packages/
-├── ProjectSettings/
-├── .gitignore
-└── README.md
-```
 
 ## 🖥️ How to Run
 
