@@ -1,34 +1,14 @@
-// =====================================================================
-//  Class 9 - GPU Instancing (슬라이드 p.29 ~ p.39)
-//  Advanced Computer Graphics / Mankyu Sung
-//
-//  p.30  수만 개를 for 문으로 하나씩 그리면 CPU <-> GPU 전송이 너무 많다.
-//  p.31  draw 함수 한 번으로 n개를 그리고, instance 마다 다른 변환 행렬만
-//        따로 보낸다.
-//  p.33  ~ p.35  InstanceData 리스트를 만들고 Graphics.RenderMeshInstanced 로
-//        한 번에 그린다.
-//
-//  사용법
-//    1) 빈 GameObject 에 이 스크립트를 붙인다.
-//    2) Mesh 에 Quad 를, Material 에 spriteMaterial(Unlit/spriteShader)을 넣는다.
-//       Mesh 를 비워 두면 Unity 내장 Quad 를 자동으로 가져온다.
-//    3) Material 의 Enable GPU Instancing 을 켠다. (p.36)
-//    4) 씬에 원본 Quad 오브젝트가 남아 있다면 꺼 둔다.
-//       RenderMeshInstanced 는 GameObject 의 Transform 을 전혀 쓰지 않는다.
-//
-//  Unity 2021.2 이상 필요 (RenderParams / RenderMeshInstanced API)
-// =====================================================================
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class BillboardInstancer : MonoBehaviour
 {
-    // p.30 과 p.31 을 직접 비교해 보기 위한 모드
+    //직접 비교해 보기 위한 모드
     public enum DrawMode
     {
-        Instanced,   // p.31 : draw 한 번으로 n개          -> 드로우콜 1
-        NaiveLoop    // p.30 : for 문으로 하나씩            -> 드로우콜 n
+        Instanced,   // draw 한 번으로 n개          -> 드로우콜 1
+        NaiveLoop    // for 문으로 하나씩            -> 드로우콜 n
     }
 
     [Header("Instanced Mesh")]
@@ -85,7 +65,7 @@ public class BillboardInstancer : MonoBehaviour
         ready = true;
     }
 
-    // p.34 : 1000개의 instance 에 대해 random 위치, 방향 설정
+    // 1000개의 instance 에 대해 random 위치, 방향 설정
     private void BuildInstances()
     {
         instances.Clear();
@@ -117,7 +97,6 @@ public class BillboardInstancer : MonoBehaviour
         return Random.insideUnitSphere * radius;
     }
 
-    // p.35
     private Matrix4x4[] GetMatrices()
     {
         Matrix4x4[] result = new Matrix4x4[instances.Count];
@@ -150,7 +129,7 @@ public class BillboardInstancer : MonoBehaviour
             DrawNaive();
     }
 
-    // p.31, p.35 : 한 개의 draw 함수로 n개를 동시에 그린다
+    // 한 개의 draw 함수로 n개를 동시에 그린다
     private void DrawInstanced()
     {
         for (int start = 0; start < matrices.Length; start += MaxPerBatch)
@@ -160,7 +139,7 @@ public class BillboardInstancer : MonoBehaviour
         }
     }
 
-    // p.30 : 비교용. 하나씩 그린다. Frame Debugger 로 드로우콜 수를 비교할 것
+    // 비교용. 하나씩 그린다. Frame Debugger 로 드로우콜 수를 비교할 것
     private void DrawNaive()
     {
         for (int i = 0; i < matrices.Length; i++)
