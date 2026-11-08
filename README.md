@@ -13,8 +13,8 @@
 |---|---|
 | Project | KMU_2_CG |
 | Category | Computer Graphics |
-| Engine / Framework | Unity / OpenGL (실제 사용 환경에 맞게 수정) |
-| Language | C++ / C# (실제 사용 언어에 맞게 수정) |
+| Engine | Unity (실제 사용 환경에 맞게 수정) |
+| Language | C# (실제 사용 언어에 맞게 수정) |
 | Platform | Windows |
 | Status | In Development |
 
